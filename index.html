@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Darumadrop+One&family=Inconsolata:wght@200..900&family=Tourney:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            box-sizing: border-box;
+            font-family: 'Darumadrop One';
+        }
+
+        body {
+            height: 100vh;
+            background: #f99346;
+        }
+
+        #top {
+            width: 100%;
+            height: 70px;
+            background: #f5a04b;
+            opacity: 0.8;
+        }
+
+
+        #container {
+            width: 1920px;
+            height: 100vh;
+            margin: auto;
+            background: url(./images/background4.jpg) no-repeat center;
+            background-size: 1920px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        #background {
+            width: 1920px;
+            height: 100vh;
+            position: absolute;
+            background: #fff;
+            opacity: 0.3;
+            z-index: -1;
+        }
+
+        #card-game {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            width: 20%;
+            height: 500px;
+        }
+
+        #card {
+            width: 300px;
+            height: 350px;
+            border: 5px solid;
+            border-radius: 5%;
+            overflow: hidden;
+        }
+
+        #card img {
+            width: 300px;
+            height: 350px;
+            display: none;
+        }
+
+        #confirm-btn {
+            display: none;
+        }
+
+        #card-game input {
+            width: 160px;
+            height: 100px;
+            font-family: 'Darumadrop One';
+            font-size: 40px;
+            background: #ec6800;
+            border: 8px solid #f5a04b;
+            color: #fff;
+            letter-spacing: 8px;
+        }
+
+        #card-game input:hover {
+            cursor: pointer;
+            color: #000;
+            border: 8px solid #ce5900;
+        }
+
+        #card-game input:active {
+            border: 8px solid #9c4400;
+        }
+
+
+        #clock {
+            position: absolute;
+            top: 10%;
+            left: 70%;
+            width: 500px;
+            height: 500px;
+            border: 12px solid #000;
+            border-radius: 50%;
+            background: linear-gradient(90deg, #f59701 20%, #fff 20%, #fff 22%, #333 22%, #333 78%, #fff 78%, #fff 80%, #f59701 80%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 66px;
+                height: 66px;
+            }
+        }
+
+        .hour {
+            width: 12%;
+            height: 12px;
+            background: #ec6800;
+            border-radius: 10px;
+            position: absolute;
+            left: 38%;
+            z-index: 2;
+            transform-origin: right center;
+        }
+
+        .minute {
+            width: 20%;
+            height: 10px;
+            background: #f59701;
+            border-radius: 10px;
+            position: absolute;
+            left: 30%;
+            z-index: 1;
+            transform-origin: right center;
+        }
+
+        .second {
+            width: 22%;
+            height: 4px;
+            background-color: #000;
+            position: absolute;
+            left: 28%;
+            border-radius: 5px;
+            transform-origin: right center;
+            z-index: 3;
+        }
+
+        .dot {
+            width: 25px;
+            height: 25px;
+            position: absolute;
+            border-radius: 50%;
+            background: #7a310f;
+            z-index: 4;
+        }
+
+        .scale {
+            width: 320px;
+            height: 320px;
+            background: #fff;
+            /* border: 12px solid #7793cf; */
+            border-radius: 50%;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            div {
+                position: absolute;
+                width: 18px;
+                height: 300px;
+            }
+
+            span {
+                position: absolute;
+                font-size: 28px;
+            }
+        }
+
+        .out-scale {
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            position: absolute;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            div {
+                position: absolute;
+                width: 58px;
+                height: 470px;
+            }
+
+            span {
+                position: absolute;
+                font-size: 28px;
+            }
+        }
+
+        .text {
+            width: 110px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 5px solid #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #fff;
+            color: #ffffff;
+            font-size: 18px;
+            position: absolute;
+            top: 86%;
+            display: flex;
+        }
+
+        #CA-clock {
+            position: absolute;
+            top: 10%;
+            left: 30%;
+            width: 250px;
+            height: 250px;
+            border: 12px solid #000;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .dot {
+                /* display: none; */
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        .smclock-text {
+            position: absolute;
+            top: 62%;
+            font-size: 24px;
+        }
+
+        #AU-clock {
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            width: 250px;
+            height: 250px;
+            border: 12px solid #000;
+            border-radius: 50%;
+            background: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .dot {
+                /* display: none; */
+                width: 15px;
+                height: 15px;
+            }
+        }
+
+        .ca-hour {
+            width: 50px;
+            height: 10px;
+            left: 27%;
+        }
+
+        .ca-min {
+            width: 60px;
+            height: 8px;
+            left: 23%;
+        }
+
+        .ca-sec {
+            width: 65px;
+            height: 3px;
+            left: 20%;
+        }
+
+        .ca-scale {
+            width: 200px;
+            height: 200px;
+
+            div {
+                width: 20px;
+                height: 200px;
+            }
+
+            span {
+                font-size: 20px;
+            }
+        }
+
+        iframe {
+            position: absolute;
+            top: 55%;
+            left: 35%;
+            border-radius: 4%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        #footer {
+            width: 100%;
+            height: 80px;
+            background: #f5a04b;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="container">
+        <div id="top"></div>
+        <div id="logo"></div>
+        <div id="clock">
+            <div class="hour"></div>
+            <div class="minute"></div>
+            <div class="second"></div>
+            <div class="dot"></div>
+            <div class="scale">
+                <div><span>12</span></div>
+                <div><span>1</span></div>
+                <div><span>2</span></div>
+                <div><span>3</span></div>
+                <div><span>4</span></div>
+                <div><span>5</span></div>
+                <div><span>6</span></div>
+                <div><span>7</span></div>
+                <div><span>8</span></div>
+                <div><span>9</span></div>
+                <div><span>10</span></div>
+                <div><span>11</span></div>
+            </div>
+            <div class="out-scale">
+                <div><span><img src="./images/clock2.png"></span></div>
+                <div><span><img src="./images/clock7.png"></span></div>
+                <div><span><img src="./images/clock3.png"></span></div>
+                <div><span><img src="./images/clock8.png"></span></div>
+                <div><span><img src="./images/clock4.png"></span></div>
+                <div><span><img src="./images/clock5.png"></span></div>
+                <div><span></span></div>
+                <div><span><img src="./images/clock7.png"></span></div>
+                <div><span><img src="./images/clock3.png"></span></div>
+                <div><span><img src="./images/clock8.png"></span></div>
+                <div><span><img src="./images/clock4.png"></span></div>
+                <div><span><img src="./images/clock5.png"></span></div>
+            </div>
+            <div class="text"><span>00:00:00</span></div>
+        </div>
+
+        <div id="CA-clock">
+            <div class="hour ca-hour"></div>
+            <div class="minute ca-min"></div>
+            <div class="second ca-sec"></div>
+            <div class="dot"></div>
+            <div class="scale ca-scale">
+                <div><span>12</span></div>
+                <div><span>1</span></div>
+                <div><span>2</span></div>
+                <div><span>3</span></div>
+                <div><span>4</span></div>
+                <div><span>5</span></div>
+                <div><span>6</span></div>
+                <div><span>7</span></div>
+                <div><span>8</span></div>
+                <div><span>9</span></div>
+                <div><span>10</span></div>
+                <div><span>11</span></div>
+            </div>
+            <div class="smclock-text">Toronto</div>
+        </div>
+
+        <div id="card-game">
+            <div id="card">
+                <img src="./images/ch01.png">
+                <img src="./images/ch02.png">
+                <img src="./images/ch03.png">
+                <img src="./images/ch04.png">
+                <img src="./images/ch05.png">
+                <img src="./images/ch06.png">
+                <img src="./images/ch07.png">
+                <img src="./images/ch08.png">
+                <img src="./images/ch09.png">
+                <img src="./images/ch10.png">
+
+            </div>
+            <br>
+            <input type="button" value="ガチャ" id="card-btn">
+            <input type="button" value="確認" id="confirm-btn">
+
+        </div>
+
+        <div id="footer"></div>
+    </div>
+
+    <div id="AU-clock">
+        <div class="hour ca-hour"></div>
+        <div class="minute ca-min"></div>
+        <div class="second ca-sec"></div>
+        <div class="dot"></div>
+        <div class="scale ca-scale">
+            <div><span>12</span></div>
+            <div><span>1</span></div>
+            <div><span>2</span></div>
+            <div><span>3</span></div>
+            <div><span>4</span></div>
+            <div><span>5</span></div>
+            <div><span>6</span></div>
+            <div><span>7</span></div>
+            <div><span>8</span></div>
+            <div><span>9</span></div>
+            <div><span>10</span></div>
+            <div><span>11</span></div>
+        </div>
+        <div class="smclock-text">Milan</div>
+    </div>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/gK6RbuM3U7Y?si=W0ysCj7Zo4xY3dQ8&amp;controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+    <script>
+        // 抽牌遊戲
+
+
+
+        const card = document.getElementById('card')
+        const confirmBtn = document.getElementById('confirm-btn')
+        const cards = document.querySelectorAll('#card img')
+
+        const drawCard = () => {
+            let i = 0
+            let intervalTime = 10
+
+            const showCard = () => {
+                cards.forEach(card => card.style.display = 'none')
+
+                const randomIndex = Math.floor(Math.random() * cards.length)
+                const randomCard = cards[randomIndex]
+
+                randomCard.style.display = 'block'
+
+
+                console.log(randomCard)
+
+                i++
+
+                // 調整間格時間，速度漸慢 
+                if (i < 30) {
+                    intervalTime++
+                } else if (i < 60) {
+                    intervalTime += 5 // 最後幾次 間格時間增加更快
+                }
+
+                if (i < 60) {
+                    setTimeout(showCard, intervalTime)
+                } else {
+                    const finalIndex = Math.floor(Math.random() * cards.length)
+                    const finalCard = cards[finalIndex]
+                    finalCard.style.display = 'block'
+                }
+            }
+
+            showCard()
+        }
+        document.getElementById('card-btn').addEventListener('click', drawCard)
+        // document.getElementById('confirm-btn').addEventListener('click', resetGame)
+
+        // 設定數字、圖案排列
+        let scaleDivs = document.querySelectorAll('.scale div')
+        let outScaleDivs = document.querySelectorAll('.out-scale div')
+        for (let i = 0; i < scaleDivs.length; i++) {
+            scaleDivs[i].style.transform = `rotate(${i * 30}deg)`
+            scaleDivs[i].firstChild.style.transform = `rotate(${i * -30}deg)`
+            console.log(scaleDivs[i])
+        }
+        for (let i = 0; i < outScaleDivs.length; i++) {
+            outScaleDivs[i].style.transform = `rotate(${i * 30}deg)`
+            outScaleDivs[i].firstChild.style.transform = `rotate(${i * -30}deg)`
+            console.log(outScaleDivs[i])
+        }
+
+        // 時鐘指針轉動
+        // 用 getElementsByClassName 時針不會動???
+        const elHour = document.querySelectorAll('.hour')
+        const elMinute = document.querySelectorAll('.minute')
+        const elSecond = document.querySelectorAll('.second')
+        const elText = document.querySelectorAll('.text')
+
+        let clock = () => {
+            const date = new Date()
+            // console.log(date.toLocaleString('en-AU', {timeZone: 'Australia/Sydney'}))
+            let hour = date.getHours()
+            let minute = date.getMinutes()
+            let second = date.getSeconds()
+
+            elHour[0].style.transform = `rotate(${hour * 30 + 90}deg)`
+            elMinute[0].style.transform = `rotate(${minute * 6 + 90}deg)`
+            elSecond[0].style.transform = `rotate(${second * 6 + 90}deg)`
+            elText[0].innerText = `${hour.toString().padStart(2, '0')} : ${minute.toString().padStart(2, '0')} : ${second.toString().padStart(2, '0')}`
+
+
+            //     elHour[1].style.transform = `rotate(${hour.toLocaleString('en-AU', {timeZone: 'Australia/Sydney'}).toString() * 30 + 90}deg)`
+            //     elMinute[1].style.transform = `rotate(${minute * 6 + 90}deg)`
+            //     elSecond[1].style.transform = `rotate(${second * 6 + 90}deg)`
+
+            //     elHour[2].style.transform = `rotate(${hour * 30 + 90}deg)`
+            //     elMinute[2].style.transform = `rotate(${minute * 6 + 90}deg)`
+            //     elSecond[2].style.transform = `rotate(${second * 6 + 90}deg)`
+        }
+
+        setInterval(clock, 1000)
+        clock()
+
+        let caClock = () => {
+            const now = new Date()
+            const torontoTime = new Date(now.toLocaleString('en-US', { timeZone: 'America/Toronto' }))
+
+            let hour = torontoTime.getHours()
+            let minute = torontoTime.getMinutes()
+            let second = torontoTime.getSeconds()
+
+            elHour[1].style.transform = `rotate(${hour * 30 + 90}deg)`
+            elMinute[1].style.transform = `rotate(${minute * 6 + 90}deg)`
+            elSecond[1].style.transform = `rotate(${second * 6 + 90}deg)`
+        }
+
+        setInterval(caClock, 1000)
+        caClock()
+
+        let mlClock = () => {
+            const now = new Date()
+            const torontoTime = new Date(now.toLocaleString('en-US', { timeZone: 'Europe/Rome' }))
+
+            let hour = torontoTime.getHours()
+            let minute = torontoTime.getMinutes()
+            let second = torontoTime.getSeconds()
+
+
+            elHour[2].style.transform = `rotate(${hour * 30 + 90}deg)`
+            elMinute[2].style.transform = `rotate(${minute * 6 + 90}deg)`
+            elSecond[2].style.transform = `rotate(${second * 6 + 90}deg)`
+            console.log(torontoTime.toLocaleString('en-US', { timeZone: 'Europe/Rome' }))
+        }
+
+        setInterval(mlClock, 1000)
+        mlClock()
+    </script>
+</body>
+
+</html>
